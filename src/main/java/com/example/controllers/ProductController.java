@@ -44,6 +44,12 @@ public class ProductController {
         return "product"; // maps to thymeleaf template named product.html
     }
 
+    @RequestMapping("/product/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("product", productService.getProductById(id));
+        return "productform"; // maps to thymeleaf template named productform.html
+    }
+
     @RequestMapping("/product/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
