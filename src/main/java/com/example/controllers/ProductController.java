@@ -1,11 +1,14 @@
 package com.example.controllers;
 
+import com.example.domain.Product;
 import com.example.services.ProductService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by jconnors on 6/1/16.
@@ -32,12 +35,24 @@ public class ProductController {
     public String redirectToProducts() {
         return "redirect:products";
     }
-    
+
     @RequestMapping("/product/{id}")
     public String getProduct(@PathVariable Integer id, Model model) {
 
         model.addAttribute("product", productService.getProductById(id));
 
         return "product"; // maps to thymeleaf template named product.html
+    }
+
+    @RequestMapping("/product/new")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "productform"; // maps to thymeleaf template named productform.html
+    }
+
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    public String saveOrUpdateProduct(Product product) {
+        Product savedProduct = productService.saveOrUpdateProduct(product);
+        return "redirect:/product/" + savedProduct.getId();
     }
 }
