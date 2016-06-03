@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Created by jconnors on 6/1/16.
  */
+@RequestMapping("/product")
 @Controller
 public class ProductController {
 
@@ -22,48 +23,39 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping("/products")
+    @RequestMapping("/list")
     public String listProducts(Model model) {
-
-        model.addAttribute("products", productService.listAllProducts());
-
-        return "products"; // maps to thymeleaf template named products.html
+        model.addAttribute("products", productService.listAll());
+        return "/product/list"; // maps to thymeleaf template named list.html in the product directory
     }
 
-    @RequestMapping("/product")
-    public String redirectToProducts() {
-        return "redirect:products";
-    }
-
-    @RequestMapping("/product/{id}")
+    @RequestMapping("/show/{id}")
     public String getProduct(@PathVariable Integer id, Model model) {
-
-        model.addAttribute("product", productService.getProductById(id));
-
-        return "product"; // maps to thymeleaf template named product.html
+        model.addAttribute("product", productService.getById(id));
+        return "/product/show"; // maps to thymeleaf template named show.html in product directory
     }
 
-    @RequestMapping("/product/edit/{id}")
+    @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("product", productService.getProductById(id));
-        return "productform"; // maps to thymeleaf template named productform.html
+        model.addAttribute("product", productService.getById(id));
+        return "/product/productform"; // maps to thymeleaf template named productform.html in product directory
     }
 
-    @RequestMapping("/product/new")
+    @RequestMapping("/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
-        return "productform"; // maps to thymeleaf template named productform.html
+        return "/product/productform"; // maps to thymeleaf template named productform.html in product directory
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdateProduct(Product product) {
-        Product savedProduct = productService.saveOrUpdateProduct(product);
-        return "redirect:/product/" + savedProduct.getId();
+        Product newProduct = productService.saveOrUpdate(product);
+        return "redirect:/product/show/" + newProduct.getId();
     }
 
-    @RequestMapping(value = "/product/delete/{id}")
+    @RequestMapping(value = "/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        productService.deleteProduct(id);
-        return "redirect:/products";
+        productService.delete(id);
+        return "redirect:/product/list";
     }
 }

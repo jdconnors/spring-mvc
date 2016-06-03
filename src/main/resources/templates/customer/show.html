@@ -16,7 +16,7 @@
           th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
-    <div class="container">
+<div class="container">
     <div class="row">
         <div class="col-sm-6">
             <h2>Show Customer</h2>
@@ -88,11 +88,15 @@
             </form>
         </div>
     </div>
-    <div>
-        <a th:href="${'/customer/edit/' + customer.id}">Edit This Customer</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/customer/edit/' + customer.id}">Edit This Customer</a>
+        </div>
     </div>
-    <div>
-        <a th:href="${'/customers'}">Back to Customers List</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/customer/list'}">Back to Customers List</a>
+        </div>
     </div>
 </div>
 

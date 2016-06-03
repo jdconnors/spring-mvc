@@ -3,7 +3,7 @@ package com.example.domain;
 /**
  * Created by jconnors on 6/2/16.
  */
-public class Customer {
+public class Customer implements DomainObject {
     private Integer id;
     private String firstName;
     private String lastName;
@@ -15,10 +15,10 @@ public class Customer {
     private String state;
     private String zipCode;
 
-    public Integer getId() {
-        return id;
-    }
+    @Override
+    public Integer getId() { return id; }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }

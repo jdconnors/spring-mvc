@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.domain.Customer;
+import com.example.domain.DomainObject;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,49 +11,22 @@ import java.util.stream.IntStream;
  * Created by jconnors on 6/2/16.
  */
 @Service
-public class CustomerServiceImpl implements CustomerService {
-
-    private Map<Integer, Customer> customers;
-
-    public CustomerServiceImpl() {
-        loadCustomers();
-    }
+public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
     @Override
-    public List<Customer> listAllCustomers() {
-        return new ArrayList<>(customers.values());
-    }
+    public List<DomainObject> listAll() { return super.listAll(); }
 
     @Override
-    public Customer getCustomerById(Integer id) {
-        return customers.get(id);
-    }
+    public Customer getById(Integer id) { return (Customer) super.getById(id); }
 
     @Override
-    public Customer saveOrUpdateCustomer(Customer customer) {
-        if (customer != null) {
-            if (customer.getId() == null) {
-                customer.setId(getNextKey());
-            }
-            customers.put(customer.getId(), customer);
-
-            return customer;
-        } else {
-            throw new RuntimeException("Customer can't be null");
-        }
-    }
+    public Customer saveOrUpdate(Customer domainObject) { return (Customer) super.saveOrUpdate(domainObject); }
 
     @Override
-    public void deleteCustomer(Integer id) {
-        customers.remove(id);
-    }
+    public void delete(Integer id) { super.delete(id); }
 
-    private Integer getNextKey() {
-        return Collections.max(customers.keySet()) + 1;
-    }
-
-    private void loadCustomers() {
-        customers = new HashMap<>();
+    protected void loadDomainObjects() {
+        domainMap = new HashMap<>();
         IntStream.range(1, 6)
                 .boxed()
                 .forEach(i -> {
@@ -67,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
                     customer.setCity("Seattle");
                     customer.setState("WA");
                     customer.setZipCode("98121");
-                    customers.put(i, customer);
+                    domainMap.put(i, customer);
                 });
     }
 }

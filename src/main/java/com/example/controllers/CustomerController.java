@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Created by jconnors on 6/2/16.
  */
+@RequestMapping("/customer")
 @Controller
 public class CustomerController {
 
@@ -22,46 +23,39 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @RequestMapping("/customers")
+    @RequestMapping(value = {"/list", "/"})
     public String listCustomers(Model model) {
-
-        model.addAttribute("customers", customerService.listAllCustomers());
-
-        return "customers"; // maps to thymeleaf template named customers.html
+        model.addAttribute("customers", customerService.listAll());
+        return "/customer/list"; // maps to thymeleaf template named list.html in customer directory
     }
 
-    @RequestMapping("/customer")
-    public String redirectToCustomers() {
-        return "redirect:customers";
+    @RequestMapping("/show/{id}")
+    public String showCustomer(@PathVariable Integer id, Model model) {
+        model.addAttribute("customer", customerService.getById(id));
+        return "/customer/show"; // maps to thymeleaf template named show.html in customer directory
     }
 
-    @RequestMapping("/customer/{id}")
-    public String getCustomer(@PathVariable Integer id, Model model) {
-        model.addAttribute("customer", customerService.getCustomerById(id));
-        return "customer"; // maps to thymeleaf template named customer.html
-    }
-
-    @RequestMapping("/customer/edit/{id}")
+    @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("customer", customerService.getCustomerById(id));
-        return "customerform"; // maps to thymeleaf template named customerform.html
+        model.addAttribute("customer", customerService.getById(id));
+        return "/customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
     }
 
-    @RequestMapping("/customer/new")
+    @RequestMapping("/new")
     public String newCustomer(Model model) {
         model.addAttribute("customer", new Customer());
-        return "customerform"; // maps to thymeleaf template named customerform.html
+        return "/customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
     }
 
-    @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public String saveOrUpdateCustomer(Customer customer) {
-        Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
-        return "redirect:/customer/" + savedCustomer.getId();
+    @RequestMapping(method = RequestMethod.POST)
+    public String saveOrUpdate(Customer customer) {
+        Customer newCustomer = customerService.saveOrUpdate(customer);
+        return "redirect:/customer/show/" + newCustomer.getId();
     }
 
-    @RequestMapping(value = "/customer/delete/{id}")
-    public String deleteCustomer(@PathVariable Integer id) {
-        customerService.deleteCustomer(id);
-        return "redirect:/customers";
+    @RequestMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        customerService.delete(id);
+        return "redirect:/customer/list";
     }
 }

@@ -52,11 +52,15 @@
             </form>
         </div>
     </div>
-    <div>
-        <a th:href="${'/product/edit/' + product.id}">Edit This Product</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/product/edit/' + product.id}">Edit This Product</a>
+        </div>
     </div>
-    <div>
-        <a th:href="${'/products'}">Back to Products List</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/product/list'}">Back to Products List</a>
+        </div>
     </div>
 </div>
 

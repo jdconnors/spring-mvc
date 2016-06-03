@@ -25,7 +25,7 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Image URL</th>
-                <th>View</th>
+                <th>Show</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -34,14 +34,16 @@
                 <td th:text="${product.description}"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.imageUrl}"></td>
-                <td><a th:href="${'/product/' + product.id}">View</a></td>
+                <td><a th:href="${'/product/show/' + product.id}">Show</a></td>
                 <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>
                 <td><a th:href="${'/product/delete/' + product.id}">Delete</a></td>
             </tr>
         </table>
     </div>
-    <div>
-        <a th:href="${'/product/new'}">New Product</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/product/new'}">New Product</a>
+        </div>
     </div>
 </div>
 
