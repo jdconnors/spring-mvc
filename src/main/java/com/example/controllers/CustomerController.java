@@ -26,25 +26,25 @@ public class CustomerController {
     @RequestMapping(value = {"/list", "/"})
     public String listCustomers(Model model) {
         model.addAttribute("customers", customerService.listAll());
-        return "/customer/list"; // maps to thymeleaf template named list.html in customer directory
+        return "customer/list"; // maps to thymeleaf template named list.html in customer directory
     }
 
     @RequestMapping("/show/{id}")
     public String showCustomer(@PathVariable Integer id, Model model) {
         model.addAttribute("customer", customerService.getById(id));
-        return "/customer/show"; // maps to thymeleaf template named show.html in customer directory
+        return "customer/show"; // maps to thymeleaf template named show.html in customer directory
     }
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         model.addAttribute("customer", customerService.getById(id));
-        return "/customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
+        return "customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
     }
 
     @RequestMapping("/new")
     public String newCustomer(Model model) {
         model.addAttribute("customer", new Customer());
-        return "/customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
+        return "customer/customerform"; // maps to thymeleaf template named customerform.html in customer directory
     }
 
     @RequestMapping(method = RequestMethod.POST)

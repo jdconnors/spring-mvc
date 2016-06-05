@@ -26,25 +26,25 @@ public class ProductController {
     @RequestMapping("/list")
     public String listProducts(Model model) {
         model.addAttribute("products", productService.listAll());
-        return "/product/list"; // maps to thymeleaf template named list.html in the product directory
+        return "product/list"; // maps to thymeleaf template named list.html in the product directory
     }
 
     @RequestMapping("/show/{id}")
     public String getProduct(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.getById(id));
-        return "/product/show"; // maps to thymeleaf template named show.html in product directory
+        return "product/show"; // maps to thymeleaf template named show.html in product directory
     }
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.getById(id));
-        return "/product/productform"; // maps to thymeleaf template named productform.html in product directory
+        return "product/productform"; // maps to thymeleaf template named productform.html in product directory
     }
 
     @RequestMapping("/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
-        return "/product/productform"; // maps to thymeleaf template named productform.html in product directory
+        return "product/productform"; // maps to thymeleaf template named productform.html in product directory
     }
 
     @RequestMapping(method = RequestMethod.POST)
