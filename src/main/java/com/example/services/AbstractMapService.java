@@ -12,7 +12,6 @@ public abstract class AbstractMapService {
 
     public AbstractMapService() {
         domainMap = new HashMap<>();
-        loadDomainObjects();
     }
 
     public List<DomainObject> listAll() { return new ArrayList<>(domainMap.values()); }
@@ -34,7 +33,10 @@ public abstract class AbstractMapService {
 
     public void delete(Integer id) { domainMap.remove(id); }
 
-    private Integer getNextKey() { return Collections.max(domainMap.keySet()) + 1; }
-
-    protected abstract void loadDomainObjects();
+    private Integer getNextKey() {
+        if (domainMap.size() > 0) {
+            return Collections.max(domainMap.keySet()) + 1;
+        }
+        return 1;
+    }
 }

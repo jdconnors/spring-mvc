@@ -1,6 +1,8 @@
 package com.example.bootstrap;
 
+import com.example.domain.Customer;
 import com.example.domain.Product;
+import com.example.services.CustomerService;
 import com.example.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -8,6 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.stream.IntStream;
 
 /**
  * Created by jconnors on 6/10/16.
@@ -16,15 +19,23 @@ import java.math.BigDecimal;
 public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private ProductService productService;
+    private CustomerService customerService;
 
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
 
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)
+    {
         loadProducts();
+        loadCustomers();
     }
 
     public void loadProducts() {
@@ -58,5 +69,23 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         product5.setPrice(new BigDecimal("25.99"));
         product5.setImageUrl("http://example.com/product5");
         productService.saveOrUpdate(product5);
+    }
+
+    public void loadCustomers() {
+        IntStream.range(1, 6)
+                .boxed()
+                .forEach(i -> {
+                    Customer customer = new Customer();
+                    customer.setFirstName("FName" + i);
+                    customer.setLastName("LName" + i);
+                    customer.setEmail("fnamelname" + i);
+                    customer.setPhoneNumber("206555100" + i);
+                    customer.setAddress1("address1-" + i);
+                    customer.setAddress2("address2-" + i);
+                    customer.setCity("Seattle");
+                    customer.setState("WA");
+                    customer.setZipCode("98121");
+                    customerService.saveOrUpdate(customer);
+                });
     }
 }
