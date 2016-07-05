@@ -2,6 +2,7 @@ package com.example.testsuite;
 
 import com.example.services.CustomerServiceJpaDaoImplTest;
 import com.example.services.ProductServiceJpaDaoImplTest;
+import com.example.services.UserServiceJpaDaoImplTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -11,7 +12,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         ProductServiceJpaDaoImplTest.class,
-        CustomerServiceJpaDaoImplTest.class
+        CustomerServiceJpaDaoImplTest.class,
+        UserServiceJpaDaoImplTest.class
 })
 public class ServicesTestSuite {
 }

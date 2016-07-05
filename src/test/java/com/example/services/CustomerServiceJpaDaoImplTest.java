@@ -2,6 +2,7 @@ package com.example.services;
 
 import com.example.config.JpaIntegrationConfig;
 import com.example.domain.Customer;
+import com.example.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -122,5 +123,18 @@ public class CustomerServiceJpaDaoImplTest {
 
     public void testDeleteMethod() throws Exception {
         //$TODO
+    }
+
+    @Test
+    public void testSaveWithUser() {
+        Customer customer = new Customer();
+        User user = new User();
+        user.setUsername("This is my user name");
+        user.setPassword("MyAwesomePassword");
+        customer.setUser(user);
+
+        Customer savedCustomer = customerService.saveOrUpdate(customer);
+
+        assert savedCustomer.getUser().getId() != null;
     }
 }

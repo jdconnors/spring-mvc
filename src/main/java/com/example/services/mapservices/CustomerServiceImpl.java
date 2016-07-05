@@ -1,12 +1,12 @@
-package com.example.services;
+package com.example.services.mapservices;
 
 import com.example.domain.Customer;
 import com.example.domain.DomainObject;
+import com.example.services.CustomerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 /**
  * Created by jconnors on 6/2/16.
