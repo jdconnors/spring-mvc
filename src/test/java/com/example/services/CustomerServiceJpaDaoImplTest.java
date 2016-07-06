@@ -125,6 +125,21 @@ public class CustomerServiceJpaDaoImplTest {
         //$TODO
     }
 
+    /*
+    The testSaveWithUser() test was added by the instructor in the
+    'One to One Entity Relationships - Unidirectional' lesson, but
+    does not work after the refactoring he did in the 'One to One
+    Entity Relationships - Bidirectional' lesson.  When he changed...
+        @OneToOne(cascade = {CascadeType.ALL})
+    ...to...
+        @OneToOne
+    ...it breaks this test.  He confirmed that his new test in
+    UserServiceJpaDaoImplTest.jave worked fine but he did not go back
+    and see that this test no longer works.  In his source at the end
+    of the module he did not show this test being removed.  But I have
+    removed it because it is no longer valid.
+     */
+    /*
     @Test
     public void testSaveWithUser() {
         Customer customer = new Customer();
@@ -137,4 +152,5 @@ public class CustomerServiceJpaDaoImplTest {
 
         assert savedCustomer.getUser().getId() != null;
     }
+    */
 }
